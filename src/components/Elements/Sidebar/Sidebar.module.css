@@ -1,0 +1,33 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  min-width: 3em;
+  padding: calc(var(--spacing-unit) * 4);
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.tray {
+  display: flex;
+  flex-direction: column;
+  grid-row: 2;
+  row-gap: var(--spacing-unit);
+}
+
+.header {
+  grid-row: 1;
+}
+
+.footer {
+  grid-row: 3;
+}
+
+.collapsed {
+  width: 4em;
+}
