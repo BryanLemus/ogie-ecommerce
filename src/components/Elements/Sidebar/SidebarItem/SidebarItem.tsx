@@ -1,16 +1,22 @@
 import { SidebarContext } from "@/context/SidebarContext";
-import { ReactElement, ReactNode, useContext, useState } from "react";
+import {
+  HTMLAttributes,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useState,
+} from "react";
 import styles from "./SidebarItem.module.css";
 
 /**
  * Component Props
  */
-interface Props {
+interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "onClick"> {
   children?: ReactNode;
   value: string | number;
   label: string;
   icon?: ReactElement<SVGElement>;
-  onClick?: () => void;
+  onClick?: (value: string | number) => void;
 }
 
 /**
@@ -28,7 +34,7 @@ export const SidebarItem = ({
   const context = useContext(SidebarContext);
 
   const clickHandler = () => {
-    if (onClick) onClick();
+    if (onClick) onClick(value);
     context?.setActivePage(value);
   };
 
@@ -36,25 +42,30 @@ export const SidebarItem = ({
     <>
       <div
         className={
+          // Base container style
           `${styles.container}` +
+          // Apply Selected style, if activePage value is the same that sidebar item value
           `${context?.activePage === value ? " " + styles.selected : ""}`
         }
         onClick={clickHandler}
       >
-        {/** Sidebar Item Icon */}
+        {/** Icon */}
         {icon ? <div className={styles.icon}>{icon}</div> : null}
 
-        {/** Sidebar Item Label */}
+        {/** Label */}
         <label className={styles.label}>{label}</label>
 
-        {/** Sidebar Item Dropdown Button */}
+        {/** Expand Button */}
         {children ? (
           <div
             className={
-              `${styles.dropdownButton}` +
+              `${styles.expandButton}` +
               `${expanded ? " " + styles.expanded : ""}`
             }
-            onClick={() => setExpanded(!expanded)}
+            onClick={(event) => {
+              event.stopPropagation();
+              setExpanded(!expanded);
+            }}
           >
             <img src="/expand_more_FILL0_wght400_GRAD0_opsz48.svg" />
           </div>

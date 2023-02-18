@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-unit);
+  width: 100%;
+  height: fit-content;
+  column-gap: var(--spacing-unit);
+}
